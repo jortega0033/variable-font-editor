@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Variable Font Editor</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/static/styles.css">
+<script src="/static/app.js" defer></script>
+</head>
+<body>
+<header class="app-header">
+  <h1>Font Editor</h1>
+  <button type="button" id="new-font" class="btn secondary">New font</button>
+</header>
+
+<main>
+  <section class="bar" aria-labelledby="h-actions">
+    <h2 id="h-actions" class="visually-hidden">Save and messages</h2>
+    <div class="bar-row">
+      <button type="button" id="save" class="btn primary">Save</button>
+      <span id="dirty" class="dirty"></span>
+    </div>
+    <div id="status" role="status" aria-live="polite" class="msg ok"></div>
+    <div id="error" role="alert" class="msg err"></div>
+    <div id="conflict" class="conflict"></div>
+  </section>
+
+  <div class="layout">
+    <div class="controls">
+      <fieldset id="editor-lock" class="lock">
+        <legend class="visually-hidden">Editor</legend>
+
+        <section class="card" aria-labelledby="h-font">
+          <h2 id="h-font">Font</h2>
+          <div class="field">
+            <label for="font-name">Font name</label>
+            <input type="text" id="font-name" maxlength="60" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="cap-height">Cap height</label>
+            <input type="number" id="cap-height" min="300" max="1000" step="1" value="700">
+          </div>
+        </section>
+
+        <section class="card" aria-labelledby="h-glyphs">
+          <h2 id="h-glyphs">Glyphs</h2>
+          <form id="add-glyph-form" novalidate>
+            <div class="field">
+              <label for="glyph-name">Glyph name</label>
+              <input type="text" id="glyph-name" maxlength="24" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="advance-width">Advance width</label>
+              <input type="number" id="advance-width" min="100" max="1500" step="1" value="500">
+            </div>
+            <div class="btn-row">
+              <button type="submit" id="add-glyph" class="btn primary">Add glyph</button>
+              <button type="button" id="add-fixture" class="btn secondary">Add fixture glyph</button>
+            </div>
+          </form>
+          <ul id="glyph-list" class="list" aria-label="Glyphs in this font"></ul>
+          <p id="glyph-empty" class="hint">No glyphs yet.</p>
+        </section>
+
+        <section class="card" aria-labelledby="h-selected">
+          <h2 id="h-selected">Selected glyph</h2>
+          <p id="panel-hint" class="hint">Add or select a glyph to edit it.</p>
+          <fieldset id="glyph-panel" class="lock" disabled>
+            <legend class="visually-hidden">Selected glyph controls</legend>
+            <div class="field">
+              <label for="selected-width">Selected glyph width</label>
+              <input type="number" id="selected-width" min="100" max="1500" step="1">
+            </div>
+            <div class="field">
+              <label for="point-select">Selected point</label>
+              <select id="point-select"></select>
+            </div>
+            <div class="pair">
+              <div class="field">
+                <label for="point-x">Point X</label>
+                <input type="number" id="point-x" min="-1000" max="2000" step="1">
+              </div>
+              <div class="field">
+                <label for="point-y">Point Y</label>
+                <input type="number" id="point-y" min="-1000" max="2000" step="1">
+              </div>
+            </div>
+            <div class="field">
+              <label for="step">Step</label>
+              <input type="number" id="step" min="1" max="100" step="1" value="10">
+            </div>
+            <div class="move" role="group" aria-label="Move selected point">
+              <button type="button" id="move-left" class="btn secondary">Left</button>
+              <button type="button" id="move-right" class="btn secondary">Right</button>
+              <button type="button" id="move-up" class="btn secondary">Up</button>
+              <button type="button" id="move-down" class="btn secondary">Down</button>
+            </div>
+            <p class="hint">Shift+click or Shift+arrow moves by 1.</p>
+          </fieldset>
+        </section>
+      </fieldset>
+
+      <section class="card" aria-labelledby="h-saved">
+        <h2 id="h-saved">Saved fonts</h2>
+        <ul id="font-list" class="list" aria-label="Saved fonts"></ul>
+        <p id="font-empty" class="hint" hidden>No saved fonts yet.</p>
+        <button type="button" id="font-retry" class="btn secondary" hidden>Retry loading fonts</button>
+      </section>
+    </div>
+
+    <section class="preview" aria-labelledby="h-preview">
+      <h2 id="h-preview">Preview</h2>
+      <canvas id="glyph-canvas" tabindex="0" role="img" aria-label="No glyph selected">Glyph preview</canvas>
+      <p id="preview-readout" class="readout"></p>
+      <p class="hint">Click the canvas to pick a point. Arrow keys move it by Step.</p>
+    </section>
+  </div>
+</main>
+</body>
+</html>
