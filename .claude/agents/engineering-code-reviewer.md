@@ -25,6 +25,7 @@ Variable Font Editor is a local, offline workbench for drafting letterforms: Pyt
 - Interpolated values round half away from zero (PRD section 8).
 - No new dependency or external request; no data directory, SQLite file or exported font committed (CLAUDE.md "Git workflow").
 - A behaviour change updates the PRD section, the acceptance matrix in PRD section 10 and `docs/architecture.md` (same section).
+- UI changes are checked against `docs/ui-quality.md` (the ten UI rules), rule by rule, and the result is stated in the pull request.
 
 **Does not apply.** Auth checks (there are no accounts) and N+1 query tuning. There is no lint, format or type-check command: do not accept a claim that one passed.
 

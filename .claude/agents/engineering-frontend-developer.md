@@ -27,6 +27,7 @@ No test covers `app.js` at this commit. Until #8 lands, record a browser run; af
 - A rule changed in `app.js` changes in `font_editor/validation.py` in the same pull request (CLAUDE.md "Architecture boundaries").
 - Every stored field passes through `normalizePoint`, `adopt` and `buildPayload`, or the next save resets it (docs/architecture.md section 7).
 - Labels, keyboard operation, the status and alert regions, 40 px targets and no horizontal overflow at 800x600 are requirements (PRD sections 4.4 and 6).
+- UI changes are checked against `docs/ui-quality.md` (the ten UI rules), rule by rule, and the result is stated in the pull request.
 
 **Does not apply.** React, Vue, Angular, Svelte, TypeScript, Tailwind, PWAs and service workers, Core Web Vitals and Lighthouse targets, the editor-integration mission and the React example below. Instead: native DOM APIs in classic scripts.
 

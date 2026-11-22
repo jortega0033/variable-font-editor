@@ -14,7 +14,7 @@ Both commands were run on 2026-11-22 on Windows 11 with Python 3.13.14, from the
 - There is no install step. Python 3.12 or newer is the only requirement. On Windows the interpreter is `python`; on Linux use `python3`.
 - Keep `-t .` in the test command. The form printed in `docs/PRD.md` section 12 (without `-t .`) fails with import errors, because the test modules use relative imports.
 - `--data-dir` and `--port` are both required. The port must be 1 to 65535; port 0 is available only to tests through `create_server`.
-- There is no lint, format, type-check or build command, and no CI workflow. Do not claim that any of these passed.
+- There is no lint, format, type-check or build command. Do not claim that any of these passed. The only CI check is the test suite (see Delivery workflow).
 - The Linux and Python 3.12 runs reported in the README were not repeated during preparation.
 - Stop every server you start. `data/` and `*.sqlite*` are ignored by Git; use a scratch `--data-dir` for experiments.
 
@@ -76,6 +76,7 @@ Report only what you ran and saw. For each ticket, capture:
 5. For schema changes: a test or a run that opens a database created by the previous schema version with data in it and shows the data intact.
 6. For export changes: the name, version and SHA-256 of the staged library that was used, and the values read back from the exported file.
 7. `git status --short` showing no stray files, and confirmation that every server started for the check was stopped.
+8. Green CI on the pull request (`gh pr checks`), with each job name. Do not mark the pull request ready before it is green.
 
 State what was not verified. A README or PRD claim that you did not reproduce is a claim, not evidence.
 
@@ -94,6 +95,20 @@ When asked to implement, continue or finish a GitHub issue, follow the playbook 
 - Backend Architect, Frontend Developer and API Tester can edit files. The other six are read-only (`tools: Read, Grep, Glob`) and cannot run commands: give them the diff, the acceptance criteria and the recorded command output.
 - The session or role that wrote a change does not count as its reviewer.
 - List the roles that ran, what each was asked and its verdict in the pull request description under "Agent roles run".
+
+## Delivery workflow
+
+How a ticket gets from the queue to a ready pull request. Each piece has its own file; this part only links them.
+
+- **Start:** the owner types `/next-ticket` ([`.claude/skills/next-ticket/SKILL.md`](.claude/skills/next-ticket/SKILL.md)); that is the go signal, nothing runs on a schedule. It runs one ticket through the [`implement-ticket`](.claude/skills/implement-ticket/SKILL.md) playbook and stops at a ready pull request.
+- **Labels:** `status:ready`, `status:blocked`, `status:in-progress`, `needs-decision`. Epic issue #1 holds the order.
+- **Review gate:** [`.claude/hooks/role_gate.py`](.claude/hooks/role_gate.py) blocks `gh pr create` and `gh pr ready` until Code Reviewer and Reality Checker ran after the last code edit. `ROLE_GATE=off` in the environment Claude Code is started from switches it off for that session; only the owner does that.
+- **Permissions:** [`.claude/settings.json`](.claude/settings.json). Documented commands are allowed; force pushes, pushes to `main`, `gh pr merge` and releases are denied; edits to CI, agent configuration and Loop files ask first.
+- **CI:** [`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs the test command and the gate self-test on Linux and Windows. It must be green before the pull request is marked ready.
+- **Pull request:** [`.github/pull_request_template.md`](.github/pull_request_template.md). Add one line under `Unreleased` in [`CHANGELOG.md`](CHANGELOG.md) for every ticket.
+- **UI and copy:** [`docs/ui-quality.md`](docs/ui-quality.md) holds the ten UI rules; the `ui-ux-pro-max` and `unslop` skills are used as it describes.
+- **Decisions:** [`docs/owner-decisions.md`](docs/owner-decisions.md) records what the owner decided and where it is implemented.
+- **Merge and release:** only the owner merges and releases ([`docs/RELEASING.md`](docs/RELEASING.md)). Security reports: [`SECURITY.md`](SECURITY.md).
 
 ## Loop
 

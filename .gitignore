@@ -11,3 +11,6 @@ data/
 .prep/
 test-results/
 playwright-report/
+
+# Claude Code local gate ledger
+.claude/state/

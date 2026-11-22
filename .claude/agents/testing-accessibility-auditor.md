@@ -22,6 +22,7 @@ Variable Font Editor is a local, offline workbench for drafting letterforms. Its
 - The canvas keeps `role="img"`, an updating `aria-label` and a text readout (PRD section 6).
 - Visible `:focus-visible`, contrast of at least 4.5:1, 40 px minimum targets; two columns from 720 px, stacked below; no horizontal overflow at 800x600 (PRD section 6).
 - Layout, contrast, focus visibility and target size are "Needs verification" at the baseline (docs/architecture.md section 5).
+- UI changes are checked against `docs/ui-quality.md` (the ten UI rules), rule by rule, and the result is stated in the pull request.
 
 **Does not apply.** `npx @axe-core/cli` and `npx lighthouse` (no npm here), and the patterns for tabs, menus, carousels and data tables, which this UI does not have. Report screen-reader behaviour as not tested unless the caller supplies a recorded run.
 
