@@ -14,7 +14,7 @@ Both commands were run on 2026-11-22 on Windows 11 with Python 3.13.14, from the
 - There is no install step. Python 3.12 or newer is the only requirement. On Windows the interpreter is `python`; on Linux use `python3`.
 - Keep `-t .` in the test command. The form printed in `docs/PRD.md` section 12 (without `-t .`) fails with import errors, because the test modules use relative imports.
 - `--data-dir` and `--port` are both required. The port must be 1 to 65535; port 0 is available only to tests through `create_server`.
-- There is no lint, format, type-check or build command. Do not claim that any of these passed. The only CI check is the test suite (see Delivery workflow).
+- There is no lint, format, type-check or build command. Do not claim that any of these passed. CI runs only the test suite and the role-gate self-test (see Delivery workflow).
 - The Linux and Python 3.12 runs reported in the README were not repeated during preparation.
 - Stop every server you start. `data/` and `*.sqlite*` are ignored by Git; use a scratch `--data-dir` for experiments.
 
@@ -56,7 +56,7 @@ Details and source citations are in [docs/architecture.md](docs/architecture.md)
 
 ## Git workflow
 
-Observed state at preparation time: `main` is the default branch with one commit, it is not protected, there is no CI and there are no contribution rules in the repository. The rules below are the working defaults until the owner replaces them.
+Observed state at preparation time: `main` is the default branch with one commit, it is not protected, there is no CI and there are no contribution rules in the repository. The rules below are the working defaults until the owner replaces them. CI and branch protection are now in place; see Delivery workflow.
 
 - Never commit to `main` directly. Branch from the tip of `origin/main`, one branch per ticket, named `<type>/<issue-number>-<short-slug>` (for example `feat/2-curve-points`).
 - Keep commits small and use the existing subject style (`feat: ...`, `fix: ...`, `docs: ...`, `test: ...`, `chore: ...`).

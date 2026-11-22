@@ -2,6 +2,7 @@ __pycache__/
 *.py[cod]
 .venv/
 data/
+!.claude/skills/ui-ux-pro-max/data/
 *.sqlite*
 *.db
 *.db-shm
