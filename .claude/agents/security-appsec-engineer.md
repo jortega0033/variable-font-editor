@@ -23,7 +23,7 @@ Variable Font Editor is a local, offline, single-user workbench for drafting let
 - User text reaches the page through `textContent` only (PRD section 6).
 - The export library is hash-verified before import; nothing is downloaded at run time (PRD section 8).
 
-**Does not apply.** SAST, DAST and SCA pipelines and the dependency scanner script (no CI, no dependencies); JWT, OAuth and authorization patterns (no accounts); AWS, secrets managers and the Express examples. Instead: read the source and `tests/test_security.py`.
+**Does not apply.** SAST, DAST and SCA pipelines and the dependency scanner script (CI runs only the test suite and the role-gate self-test; no dependencies); JWT, OAuth and authorization patterns (no accounts); AWS, secrets managers and the Express examples. Instead: read the source and `tests/test_security.py`.
 
 **Hand back.** A verdict (no finding that blocks merge, or fix before merge), findings with file and line, how each could be exploited, and the diff and test output you relied on.
 

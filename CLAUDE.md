@@ -56,7 +56,7 @@ Details and source citations are in [docs/architecture.md](docs/architecture.md)
 
 ## Git workflow
 
-Observed state at preparation time: `main` is the default branch with one commit, it is not protected, there is no CI and there are no contribution rules in the repository. The rules below are the working defaults until the owner replaces them. CI and branch protection are now in place; see Delivery workflow.
+Observed state at preparation time: `main` is the default branch with one commit, it is not protected, there was no workflow file and there were no contribution rules in the repository. The rules below are the working defaults until the owner replaces them. CI and branch protection are now in place; see Delivery workflow.
 
 - Never commit to `main` directly. Branch from the tip of `origin/main`, one branch per ticket, named `<type>/<issue-number>-<short-slug>` (for example `feat/2-curve-points`).
 - Keep commits small and use the existing subject style (`feat: ...`, `fix: ...`, `docs: ...`, `test: ...`, `chore: ...`).
@@ -112,4 +112,4 @@ How a ticket gets from the queue to a ready pull request. Each piece has its own
 
 ## Loop
 
-Loop Engineering is set up with the `issue-triage` pattern at L1: report-only and started by hand. It has no scheduler and makes no GitHub writes. See [LOOP.md](LOOP.md) and [loop-constraints.md](loop-constraints.md).
+Loop Engineering is set up with the `issue-triage` pattern at L1: report-only and started by hand. It has no scheduler and no loop workflow, and makes no GitHub writes. See [LOOP.md](LOOP.md) and [loop-constraints.md](loop-constraints.md).

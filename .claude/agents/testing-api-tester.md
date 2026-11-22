@@ -8,7 +8,7 @@ vibe: Breaks your API before your users do.
 
 ## In this repository
 
-Variable Font Editor is a local, offline workbench for drafting letterforms. Its JSON API under `/api/v1` is served by `font_editor/server.py` on `127.0.0.1` and stores fonts in SQLite. Application and tests use the Python standard library only, except the pending test-only Node client tests (CLAUDE.md "Hard constraints"): no pip or npm dependency, no CI.
+Variable Font Editor is a local, offline workbench for drafting letterforms. Its JSON API under `/api/v1` is served by `font_editor/server.py` on `127.0.0.1` and stores fonts in SQLite. Application and tests use the Python standard library only, except the pending test-only Node client tests (CLAUDE.md "Hard constraints"): no pip or npm dependency. CI (`.github/workflows/ci.yml`) runs only the test suite and the role-gate self-test.
 
 **Your work here.** You write HTTP-level `unittest` cases in `tests/`. `tests/test_api.py` and `tests/test_security.py` drive a real server on port 0 with a temporary data directory through `ServerTestCase` in `tests/__init__.py`. Epic #1 needs you for the point shape and body cap (#2), mapping, kerning and masters (#3, #4), the health field (#9), export responses (#5) and revision routes (#6).
 
