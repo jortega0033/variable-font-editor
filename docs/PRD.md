@@ -2,6 +2,8 @@
 
 Status legend: **[Implemented]** = implemented in M1 (see [baseline verification](../README.md#baseline-verification)); **[Planned]** = future work, not built.
 
+How the baseline is built, what was re-checked against the source, and where this document and the code differ: [architecture.md](architecture.md).
+
 ## 1. Intended user and workflow
 
 A design-system author working alone, offline, who wants to iterate on original letterforms and check spacing without a remote design tool.

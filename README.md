@@ -4,6 +4,8 @@ A local, offline workbench for drafting original letterforms: named font drafts,
 
 M1 edits single-master glyph drafts. See the baseline verification below. See [docs/PRD.md](docs/PRD.md) for the full spec.
 
+Contributor and agent instructions are in [CLAUDE.md](CLAUDE.md); the architecture trace and the known differences between the PRD and the code are in [docs/architecture.md](docs/architecture.md).
+
 ## Launch
 
 Linux:
