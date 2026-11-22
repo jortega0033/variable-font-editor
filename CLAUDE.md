@@ -90,3 +90,18 @@ State what was not verified. A README or PRD claim that you did not reproduce is
 ## Loop
 
 Loop Engineering is set up with the `issue-triage` pattern at L1: report-only and started by hand. It has no scheduler and makes no GitHub writes. See [LOOP.md](LOOP.md) and [loop-constraints.md](loop-constraints.md).
+
+## Ticket implementation: agent roles run automatically
+
+When asked to implement, continue or finish a GitHub issue, follow the playbook in [`.claude/skills/implement-ticket/SKILL.md`](.claude/skills/implement-ticket/SKILL.md). Claude Code loads it on its own for ticket work; `/implement-ticket <issue number>` starts it by hand.
+
+Delegate to the project subagents in `.claude/agents/` without waiting to be asked:
+
+- **Before coding:** Codebase Onboarding Engineer and Software Architect, as their descriptions say.
+- **While coding:** the implementing role that matches the files being changed.
+- **After coding:** each specialist reviewer whose trigger matches the change.
+- **On every ticket, before it is called done:** Code Reviewer, then Reality Checker.
+- The session that wrote a change does not count as its reviewer.
+- List the roles that ran and their verdicts in the pull request description under "Agent roles run".
+
+Each role's `description` ends with a "Use proactively ..." sentence, which is what makes Claude Code delegate to it without being told.
