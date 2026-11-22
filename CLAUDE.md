@@ -23,6 +23,7 @@ Both commands were run on 2026-11-22 on Windows 11 with Python 3.13.14, from the
 These come from [docs/PRD.md](docs/PRD.md) sections 2, 3, 7 and 8. Several are enforced by tests.
 
 - Python standard library only for the application and its tests. No pip or npm dependency, no package manifest, no build step.
+- One test-only exception, not built yet. Pending the owner decision recorded in epic #1, browser logic may be tested with Node's built-in `node:test` under `tests/js/`, with no package manifest and no npm install. The application never needs Node, and the suite skips these tests with a reason when Node is absent. If the owner decides against Node, the fallback in the first ticket of the epic applies and this bullet is removed.
 - The one planned exception is the font-building library for TrueType export (PRD sections 8 and 13). It must be approved by the owner, pinned, staged from a local copy and verified by hash before use. Do not install, download or import one until the owner has approved it. A copy that happens to be installed in your Python environment does not count.
 - No external request of any kind at run time: no CDN, web font, remote URL or telemetry.
 - The server binds `127.0.0.1` only. Keep the Host and Origin checks, the body cap and the response headers on every new route by routing through `Handler._handle` in `font_editor/server.py`.

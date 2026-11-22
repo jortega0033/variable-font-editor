@@ -39,6 +39,8 @@ npx --yes @cobusgreyling/loop@0.2.0 doctor .
 npx --yes @cobusgreyling/loop@0.2.0 status .
 ```
 
+Observed on 2026-11-22 in the preparation worktree with the loop files committed: `doctor` printed `Ready: 100/100 L3` and `Status: HEALTHY (exit 0)`; `status` printed `Pattern: issue-triage`, `State: issue-triage-state.md · not yet run`, and exited 0. The `L3` in that output is the scaffold's readiness score, not the operating level.
+
 Doctor exit codes: 0 healthy, 1 warnings, 2 blocked. These two commands need Node and network access to npm. They are maintenance tools for the loop files, not part of the product, which stays offline and standard-library only.
 
 ## Human Gates
