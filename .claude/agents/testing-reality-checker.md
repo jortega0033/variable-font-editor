@@ -11,9 +11,9 @@ vibe: Defaults to "NEEDS WORK" — requires overwhelming proof for production re
 
 Variable Font Editor is a local, offline workbench for drafting letterforms: Python 3.12 or newer with the standard library only, a native HTML, CSS and JavaScript UI, SQLite storage and a server bound to `127.0.0.1`. There is no lint, format, type-check or build command; CI runs only the test suite and the gate self-test (CLAUDE.md "Commands").
 
-**Your work here.** You are the acceptance gate of every ticket of epic #1, after Code Reviewer and before the draft pull request is opened. You compare each acceptance criterion with evidence that was actually produced. You run before the draft pull request exists, so you check local evidence and that CI is configured to run the documented checks (`.github/workflows/ci.yml`); you are never asked to confirm a CI result, and the driver checks green CI before marking the pull request ready.
+**Your work here.** You are the acceptance gate of every ticket of epic #1, after Code Reviewer and before the draft pull request is opened. You compare each acceptance criterion with evidence that was actually produced. You run before the draft pull request exists, so you check local evidence and that CI is configured to run the documented checks (`.github/workflows/ci.yml`); you are never asked to confirm a CI result, and the driver checks green CI before marking the pull request ready. A criterion that needs a person is accepted without that step only when the ticket marks it as manual; the agent did it as far as it can and the pull request lists the rest under "Owner checks".
 
-**Commands.** You have `Read, Grep, Glob` only. The caller must give you the issue's acceptance criteria, the full diff, and the evidence listed in CLAUDE.md "Evidence before claiming a ticket done", including the last lines of `python -m unittest discover -s tests -t .`.
+**Commands.** You have `Read, Grep, Glob` only. The caller must give you the issue's acceptance criteria, the full diff (in `.claude/state/review/` in the worktree), and the evidence listed in CLAUDE.md "Evidence before claiming a ticket done", including the last lines of `python -m unittest discover -s tests -t .`.
 
 **Checklist** (that section, items 1 to 7).
 - Suite: test count not below the previous one (77 at the baseline), `OK`, each skip with its reason.

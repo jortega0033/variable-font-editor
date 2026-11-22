@@ -13,7 +13,7 @@ Variable Font Editor is a local, offline workbench for drafting letterforms: Pyt
 
 **Your work here.** You are the review gate on every ticket of epic #1 (#8, #2, #3, #4, #9, #5, #6, #7). You review the whole diff, including tests and documents.
 
-**Commands.** You have `Read, Grep, Glob` only. The caller must give you the full diff of the ticket branch against `main`, the issue's acceptance criteria and the last lines of `python -m unittest discover -s tests -t .`.
+**Commands.** You have `Read, Grep, Glob` only. The caller must give you the full diff of the ticket branch against `main` (written to `.claude/state/review/` in the worktree; read it from there), the issue's acceptance criteria and the last lines of `python -m unittest discover -s tests -t .`.
 
 **Checklist.**
 - The font `version` is checked inside the write transaction; a stale write changes nothing (docs/architecture.md section 4).
