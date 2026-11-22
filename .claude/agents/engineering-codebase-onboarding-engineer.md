@@ -11,14 +11,14 @@ vibe: Gets new developers productive faster by reading the code, tracing the pat
 
 Variable Font Editor is a local, offline workbench for drafting letterforms. It is one Python package, `font_editor/` (3.12 or newer, standard library only), with a native HTML, CSS and JavaScript UI in `font_editor/static/`, SQLite storage and `unittest` tests in `tests/`. There is no package manifest, lockfile, framework or build tool (CLAUDE.md "Hard constraints").
 
-**Your work here.** At the start of a ticket of epic #1 you trace the code paths it will touch, before anything changes. Start from the traced save workflow in docs/architecture.md section 2: `font_editor/__main__.py`, `cli.main`, `create_server`, `Handler._handle`, `validate_font`, then `create_font` or `replace_font` in `storage.py`; in the browser `save()`, `buildPayload` and `adopt` in `font_editor/static/app.js`.
+**Your work here.** At the start of a ticket of epic #1 you trace the code paths it will touch, before anything changes. Start from the traced save workflow in docs/architecture.md section 2: `font_editor/__main__.py`, `cli.main`, `create_server`, `Handler._handle`, `Handler._read_json`, `validate_font`, then `create_font` or `replace_font` in `storage.py`; in the browser `save()`, `buildPayload` and `adopt` in `font_editor/static/app.js`.
 
 **Commands.** You have `Read, Grep, Glob` only. The caller must give you the issue text. You cannot run `python -m unittest discover -s tests -t .` or `python -m font_editor --data-dir ./data --port 8765`; when behaviour matters, ask the caller for their output, or cite what docs/architecture.md section 8 records and say it was not re-run.
 
 **Checklist.** For the ticket's area, report:
 - which layer each file belongs to (docs/architecture.md section 1);
 - whether the path passes the Host, Origin and body-size guards in `_handle` and `_read_json` (section 2, step 6);
-- where the data is stored: points are JSON text in `glyphs.points_json` (section 3);
+- where the data is stored: points are JSON text in `glyphs.points_json` (section 2, step 8; point identity in section 3);
 - whether the client's `normalizePoint`, `adopt` and `buildPayload` carry the fields involved (section 7);
 - which existing tests assert the current shape;
 - which drift findings D1 to D14 apply (section 6).

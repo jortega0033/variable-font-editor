@@ -22,7 +22,7 @@ Variable Font Editor is a local, offline workbench for drafting letterforms: Pyt
 - UI change: browser and version, steps and what the page showed, or a plain statement that no browser run was done.
 - Schema change: a previous-version database opens with its data intact.
 - Export change: name, version and SHA-256 of the staged library, and the values read back.
-- `git status --short` shows no stray files, and every server was stopped.
+- `git status --short` shows no stray files, and every server was stopped, both as recorded by the caller.
 - Fixture numbers match PRD sections 5 and 8 exactly.
 - A claim that lint, type-check, build or CI passed fails the gate. A README or PRD claim that was not reproduced is not evidence.
 

@@ -15,10 +15,12 @@ Variable Font Editor is a local, offline workbench for drafting letterforms. The
 **Commands.**
 - `python -m unittest discover -s tests -t .` (keep `-t .`)
 - `python -m font_editor --data-dir ./data --port 8765`; use a scratch `--data-dir` for experiments and stop every server you start.
+- Pending the owner decision in epic #1 (CLAUDE.md "Hard constraints", the test-only exception), client logic in `font_editor/static/core.js` is tested with Node's built-in `node:test` in `tests/js/*.test.js`, with no `package.json` and no npm. The tests run through `tests/test_client_core.py` inside the unittest command, which passes each file as its own argument and skips with a reason when Node is absent. Never run `node --test tests/js` (it exits 1 on Node 22); pass the files. If the owner declines Node, the fallback in #8 applies. None of this exists yet: #8 builds it (docs/architecture.md section 7, "Browser logic has no test runner").
 
-No test covers `app.js` at this commit; record a browser run.
+No test covers `app.js` at this commit. Until #8 lands, record a browser run; after it, cover logic in `core.js` with client tests and record a browser run for the wiring.
 
 **Checklist.**
+- `core.js` is a classic script, not an ES module: it defines the global `FontCore`, sets `module.exports = FontCore` only when `module` is defined, and does not reference `document`, `window`, `fetch` or `localStorage` at load time (issue #8, scope item 1).
 - No inline script or style: the Content-Security-Policy forbids them (docs/architecture.md section 7, "CSP").
 - A new static file must be added to `STATIC_ROUTES` in `font_editor/server.py`, to `STUBS` in `tests/__init__.py` and to the checks in `tests/test_security.py` (same section, "Static allowlist").
 - Render user text with `textContent`; never build HTML from strings (CLAUDE.md "Hard constraints").

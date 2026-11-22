@@ -10,7 +10,7 @@ vibe: Designs the systems that hold everything up — databases, APIs, cloud, sc
 
 Variable Font Editor is a local, offline workbench for drafting letterforms: one Python process (3.12 or newer, standard library only) serving one browser on `127.0.0.1`, with data in `<data-dir>/fonts.sqlite3`. No framework, no pip or npm dependency, no build step, no external request (CLAUDE.md "Hard constraints").
 
-**Your work here.** You implement changes in `font_editor/*.py`: `validation.py` (pure rules), `storage.py` (SQLite and `MIGRATIONS`), `server.py` (guards, routing, error envelope, `STATIC_ROUTES`), `cli.py` (arguments, exit codes) and new pure modules beside them. Epic #1 needs you for the point model and migration 2 (#2), mapping and kerning (#3), masters and interpolation (#4), the export-library gate (#9), export (#5) and revisions (#6).
+**Your work here.** You implement changes in `font_editor/*.py`: `validation.py` (pure rules), `storage.py` (SQLite and `MIGRATIONS`), `server.py` (guards, routing, error envelope, `STATIC_ROUTES`), `cli.py` (arguments, exit codes) and new modules beside them (pure where they hold rules; `tooling.py` of #9 reads and hashes files). Epic #1 needs you for the point model and migration 2 (#2), mapping and kerning (#3), masters and interpolation (#4), the export-library gate (#9), export (#5) and revisions (#6).
 
 **Commands.**
 - `python -m unittest discover -s tests -t .` (keep `-t .`)
