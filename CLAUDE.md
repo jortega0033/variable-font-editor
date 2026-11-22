@@ -23,7 +23,7 @@ Both commands were run on 2026-11-22 on Windows 11 with Python 3.13.14, from the
 These come from [docs/PRD.md](docs/PRD.md) sections 2, 3, 7 and 8. Several are enforced by tests.
 
 - Python standard library only for the application and its tests. No pip or npm dependency, no package manifest, no build step.
-- One test-only exception, not built yet. Pending the owner decision recorded in epic #1, browser logic may be tested with Node's built-in `node:test` under `tests/js/`, with no package manifest and no npm install. The application never needs Node, and the suite skips these tests with a reason when Node is absent. If the owner decides against Node, the fallback in the first ticket of the epic applies and this bullet is removed.
+- One test-only exception, not built yet. Pending the owner decision recorded in epic #1, browser logic may be tested with Node's built-in `node:test` under `tests/js/`, with no package manifest and no npm install. The application never needs Node, and the suite skips these tests with a reason when Node is absent. If the owner decides against Node, the fallback in the first ticket of the epic (issue #8) applies and this bullet is removed.
 - The one planned exception is the font-building library for TrueType export (PRD sections 8 and 13). It must be approved by the owner, pinned, staged from a local copy and verified by hash before use. Do not install, download or import one until the owner has approved it. A copy that happens to be installed in your Python environment does not count.
 - No external request of any kind at run time: no CDN, web font, remote URL or telemetry.
 - The server binds `127.0.0.1` only. Keep the Host and Origin checks, the body cap and the response headers on every new route by routing through `Handler._handle` in `font_editor/server.py`.
@@ -37,7 +37,7 @@ These come from [docs/PRD.md](docs/PRD.md) sections 2, 3, 7 and 8. Several are e
 |---|---|
 | What the product is, limits, the HTTP API, fixtures, the acceptance matrix, the future milestones P1 to P6 and the open choices | [docs/PRD.md](docs/PRD.md) |
 | How the code is layered, the traced save workflow, invariants, what is implemented, planned or unverified, and where the PRD and the code differ | [docs/architecture.md](docs/architecture.md) |
-| What to build next and in which order | Epic issue #1 on GitHub and its sub-issues, in the dependency order given in the epic body |
+| What to build next and in which order | Epic issue #1 on GitHub and its sub-issues, in the dependency order given in the epic body: #8, #2, #3, #4, #9, #5, #6, #7 |
 | What was observed to work at baseline, and on which platforms | [README.md](README.md), "Baseline verification" |
 
 Code and tests show what the product does. The PRD says what it should do. When they disagree, do not pick one silently: add a row to the drift table in `docs/architecture.md` and raise it in the ticket.
