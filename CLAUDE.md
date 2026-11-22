@@ -79,29 +79,22 @@ Report only what you ran and saw. For each ticket, capture:
 
 State what was not verified. A README or PRD claim that you did not reproduce is a claim, not evidence.
 
-## Project agents
+## Project agents and ticket workflow
 
-`.claude/agents/` holds project-local roles copied from Agency Agents at a pinned revision, plus the Loop verifier. Source paths, licence, the name collision with a user-level install, and how to check that they load are in [.claude/agency-agents/README.md](.claude/agency-agents/README.md).
+`.claude/agents/` holds project-local roles copied from Agency Agents at a pinned revision, plus `loop-verifier`, which belongs to the Loop below and takes no part in ticket work. Source paths, licence, local changes, the name collision with a user-level install, and how to check that the roles load are in [.claude/agency-agents/README.md](.claude/agency-agents/README.md).
 
-- Read-only reviewers (`tools: Read, Grep, Glob`): Software Architect, Code Reviewer, Codebase Onboarding Engineer, Accessibility Auditor, Reality Checker, Application Security Engineer.
-- Implementing roles: Backend Architect (`font_editor/*.py`), Frontend Developer (`font_editor/static/`), API Tester (`tests/`).
-- The upstream role texts were written for larger stacks. Where a role text suggests a framework, a cloud service, a scanner or a new dependency, the constraints in this file win.
+Each role file starts with a section "In this repository", written for this project: the constraints that bind the role, the files it owns or reviews, its commands, its checklist, the parts of the generic role text that do not apply here, and what it must hand back. That section and this file override the generic text below it, which was written for larger stacks (frameworks, cloud services, scanners, new dependencies).
+
+When asked to implement, continue or finish a GitHub issue, follow the playbook in [`.claude/skills/implement-ticket/SKILL.md`](.claude/skills/implement-ticket/SKILL.md). Claude Code loads it on its own for ticket work; `/implement-ticket <issue number>` starts it by hand. Delegate to the roles without waiting to be asked: each role's `description` ends with a "Use proactively ..." sentence, which is what makes Claude Code delegate. The playbook has the exact trigger of each role.
+
+- **Before coding:** Codebase Onboarding Engineer (an unfamiliar area) and Software Architect (a change to a module boundary, the data model, the schema, the API or a dependency).
+- **While coding:** Backend Architect for `font_editor/*.py`, Frontend Developer for `font_editor/static/`.
+- **After coding, when the trigger matches the change:** API Tester (HTTP-level tests in `tests/`), Application Security Engineer and Accessibility Auditor.
+- **Gates on every ticket, whatever its size:** Code Reviewer on the full diff, then Reality Checker on the acceptance criteria and the evidence listed above. A ticket is not done until both pass.
+- Backend Architect, Frontend Developer and API Tester can edit files. The other six are read-only (`tools: Read, Grep, Glob`) and cannot run commands: give them the diff, the acceptance criteria and the recorded command output.
+- The session or role that wrote a change does not count as its reviewer.
+- List the roles that ran, what each was asked and its verdict in the pull request description under "Agent roles run".
 
 ## Loop
 
 Loop Engineering is set up with the `issue-triage` pattern at L1: report-only and started by hand. It has no scheduler and makes no GitHub writes. See [LOOP.md](LOOP.md) and [loop-constraints.md](loop-constraints.md).
-
-## Ticket implementation: agent roles run automatically
-
-When asked to implement, continue or finish a GitHub issue, follow the playbook in [`.claude/skills/implement-ticket/SKILL.md`](.claude/skills/implement-ticket/SKILL.md). Claude Code loads it on its own for ticket work; `/implement-ticket <issue number>` starts it by hand.
-
-Delegate to the project subagents in `.claude/agents/` without waiting to be asked:
-
-- **Before coding:** Codebase Onboarding Engineer and Software Architect, as their descriptions say.
-- **While coding:** the implementing role that matches the files being changed.
-- **After coding:** each specialist reviewer whose trigger matches the change.
-- **On every ticket, before it is called done:** Code Reviewer, then Reality Checker.
-- The session that wrote a change does not count as its reviewer.
-- List the roles that ran and their verdicts in the pull request description under "Agent roles run".
-
-Each role's `description` ends with a "Use proactively ..." sentence, which is what makes Claude Code delegate to it without being told.

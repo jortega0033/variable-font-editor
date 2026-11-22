@@ -12,7 +12,7 @@ The project subagents in `.claude/agents/` are part of the work. Delegate to the
 
 ## Steps
 
-1. **Read the ticket.** `gh issue view <number>` and the epic it belongs to. Check that every prerequisite issue is closed and that no owner decision named in the ticket is still open. If the ticket is blocked, stop and say what blocks it.
+1. **Read the ticket.** `gh issue view <number>` and the epic it belongs to. Check that every prerequisite issue is closed. An open owner decision blocks only what the ticket says it blocks: #8 states a default to build with, and #9 says which of its items wait for the decision. If the ticket, or the part you were asked for, is blocked, stop and say what blocks it.
 2. **Read the rules.** `CLAUDE.md`, then the architecture notes it links to.
 3. **Orient and check the approach.** Delegate as the table "Before coding" says. Settle open design questions before writing code.
 4. **Branch** as the Git workflow in `CLAUDE.md` says. Never work on the default branch.
@@ -58,5 +58,5 @@ The project subagents in `.claude/agents/` are part of the work. Delegate to the
 
 - The session or role that wrote a change does not count as its reviewer.
 - Read-only reviewers cannot run commands. Give them the diff, the acceptance criteria and the recorded command output.
-- Where a role's general advice (frameworks, dependencies, cloud services) conflicts with `CLAUDE.md`, `CLAUDE.md` wins.
+- Each role file starts with a section "In this repository" written for this project. That section and `CLAUDE.md` override the role's general advice (frameworks, dependencies, cloud services) wherever they differ.
 - In the pull request description, add a section "Agent roles run" listing each role that ran, what it was asked and its verdict, and any step you did yourself because a role was missing.
