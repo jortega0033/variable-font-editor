@@ -56,7 +56,7 @@ Details and source citations are in [docs/architecture.md](docs/architecture.md)
 
 ## Git workflow
 
-Observed state at preparation time: `main` is the default branch with one commit, it is not protected, there is no CI and there are no contribution rules in the repository. The rules below are the working defaults until the owner replaces them. CI and branch protection are now in place; see Delivery workflow.
+Observed state at preparation time: `main` is the default branch with one commit, it is not protected, there was no workflow file and there were no contribution rules in the repository. The rules below are the working defaults until the owner replaces them. CI and branch protection are now in place; see Delivery workflow.
 
 - Never commit to `main` directly. Branch from the tip of `origin/main`, one branch per ticket, named `<type>/<issue-number>-<short-slug>` (for example `feat/2-curve-points`).
 - Keep commits small and use the existing subject style (`feat: ...`, `fix: ...`, `docs: ...`, `test: ...`, `chore: ...`).
@@ -76,7 +76,7 @@ Report only what you ran and saw. For each ticket, capture:
 5. For schema changes: a test or a run that opens a database created by the previous schema version with data in it and shows the data intact.
 6. For export changes: the name, version and SHA-256 of the staged library that was used, and the values read back from the exported file.
 7. `git status --short` showing no stray files, and confirmation that every server started for the check was stopped.
-8. Green CI on the pull request (`gh pr checks`), with each job name. Do not mark the pull request ready before it is green.
+8. Local evidence comes first: items 1 to 7, then both gates, then the draft pull request. After that, green CI on the pull request (`gh pr checks`), with each job name. Do not mark the pull request ready before CI is green. Reality Checker does not judge CI: it checks items 1 to 7 and that CI is configured to run the documented checks.
 
 State what was not verified. A README or PRD claim that you did not reproduce is a claim, not evidence.
 
@@ -91,7 +91,7 @@ When asked to implement, continue or finish a GitHub issue, follow the playbook 
 - **Before coding:** Codebase Onboarding Engineer (an unfamiliar area) and Software Architect (a change to a module boundary, the data model, the schema, the API or a dependency).
 - **While coding:** Backend Architect for `font_editor/*.py`, Frontend Developer for `font_editor/static/`.
 - **After coding, when the trigger matches the change:** API Tester (HTTP-level tests in `tests/`), Application Security Engineer and Accessibility Auditor.
-- **Gates on every ticket, whatever its size:** Code Reviewer on the full diff, then Reality Checker on the acceptance criteria and the evidence listed above. A ticket is not done until both pass.
+- **Gates on every ticket, whatever its size:** Code Reviewer on the full diff, then Reality Checker on the acceptance criteria and the evidence listed above. A ticket is not done until both pass and CI is green on the draft pull request. Run the gates on local evidence before the draft pull request is opened, never skip one to open or ready a pull request.
 - Backend Architect, Frontend Developer and API Tester can edit files. The other six are read-only (`tools: Read, Grep, Glob`) and cannot run commands: give them the diff, the acceptance criteria and the recorded command output.
 - The session or role that wrote a change does not count as its reviewer.
 - List the roles that ran, what each was asked and its verdict in the pull request description under "Agent roles run".
@@ -100,11 +100,11 @@ When asked to implement, continue or finish a GitHub issue, follow the playbook 
 
 How a ticket gets from the queue to a ready pull request. Each piece has its own file; this part only links them.
 
-- **Start:** the owner types `/next-ticket` ([`.claude/skills/next-ticket/SKILL.md`](.claude/skills/next-ticket/SKILL.md)); that is the go signal, nothing runs on a schedule. It runs one ticket through the [`implement-ticket`](.claude/skills/implement-ticket/SKILL.md) playbook and stops at a ready pull request.
+- **Start:** the owner types `/next-ticket` ([`.claude/skills/next-ticket/SKILL.md`](.claude/skills/next-ticket/SKILL.md)); that is the go signal, nothing runs on a schedule. It runs one ticket through the [`implement-ticket`](.claude/skills/implement-ticket/SKILL.md) playbook and stops at a ready pull request. The order is fixed: local checks, Code Reviewer, Reality Checker, draft pull request, CI, then ready only on green CI.
 - **Labels:** `status:ready`, `status:blocked`, `status:in-progress`, `needs-decision`. Epic issue #1 holds the order.
-- **Review gate:** [`.claude/hooks/role_gate.py`](.claude/hooks/role_gate.py) blocks `gh pr create` and `gh pr ready` until Code Reviewer and Reality Checker ran after the last code edit. `ROLE_GATE=off` in the environment Claude Code is started from switches it off for that session; only the owner does that.
+- **Review gate:** [`.claude/hooks/role_gate.py`](.claude/hooks/role_gate.py) blocks `gh pr create` (draft included) and `gh pr ready` until Code Reviewer and Reality Checker ran after the last code edit. `ROLE_GATE=off` in the environment Claude Code is started from switches it off for that session; only the owner does that.
 - **Permissions:** [`.claude/settings.json`](.claude/settings.json). Documented commands are allowed; force pushes, pushes to `main`, `gh pr merge` and releases are denied; edits to CI, agent configuration and Loop files ask first.
-- **CI:** [`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs the test command and the gate self-test on Linux and Windows. It must be green before the pull request is marked ready.
+- **CI:** [`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs the test command and the gate self-test on Linux and Windows. It runs on the draft pull request and must be green before the pull request is marked ready; a failure means fix, re-run local checks and both gates, push.
 - **Pull request:** [`.github/pull_request_template.md`](.github/pull_request_template.md). Add one line under `Unreleased` in [`CHANGELOG.md`](CHANGELOG.md) for every ticket.
 - **UI and copy:** [`docs/ui-quality.md`](docs/ui-quality.md) holds the ten UI rules; the `ui-ux-pro-max` and `unslop` skills are used as it describes.
 - **Decisions:** [`docs/owner-decisions.md`](docs/owner-decisions.md) records what the owner decided and where it is implemented.
@@ -112,4 +112,4 @@ How a ticket gets from the queue to a ready pull request. Each piece has its own
 
 ## Loop
 
-Loop Engineering is set up with the `issue-triage` pattern at L1: report-only and started by hand. It has no scheduler and makes no GitHub writes. See [LOOP.md](LOOP.md) and [loop-constraints.md](loop-constraints.md).
+Loop Engineering is set up with the `issue-triage` pattern at L1: report-only and started by hand. It has no scheduler and no loop workflow, and makes no GitHub writes. See [LOOP.md](LOOP.md) and [loop-constraints.md](loop-constraints.md).
