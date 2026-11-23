@@ -1,20 +1,3 @@
-:root {
-  --ink: #1b1f23;
-  --muted: #4a5560;
-  --bg: #f3f1ec;
-  --card: #ffffff;
-  --line: #8a949e;
-  --accent: #0f4c5c;
-  --accent-soft: #dff1f0;
-  --focus: #1a56db;
-  --err-bg: #fdecec;
-  --err-ink: #7a0b0b;
-  --err-line: #b42318;
-  --ok-bg: #e7f5ee;
-  --ok-ink: #0b4a2c;
-  --ok-line: #1f7a4d;
-}
-
 *, *::before, *::after { box-sizing: border-box; }
 
 [hidden] { display: none !important; }
@@ -24,7 +7,7 @@ html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   background: var(--bg);
-  color: var(--ink);
+  color: var(--fg);
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   line-height: 1.4;
@@ -46,8 +29,8 @@ body {
   justify-content: space-between;
   gap: 12px;
   padding: 10px 16px;
-  background: var(--accent);
-  color: #ffffff;
+  background: var(--surface);
+  color: var(--fg);
 }
 .app-header h1 { margin: 0; font-size: 1.25rem; }
 
@@ -57,12 +40,12 @@ h2 { margin: 0 0 8px; font-size: 1.05rem; }
 
 .bar { margin-bottom: 12px; }
 .bar-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-.dirty { color: #7a3e00; font-weight: 600; }
+.dirty { color: var(--warn-fg); font-weight: 600; }
 
 .msg { border-radius: 6px; margin-top: 8px; }
 .msg:empty { display: block; margin: 0; padding: 0; border: 0; min-height: 0; }
-.msg.ok { padding: 8px 12px; background: var(--ok-bg); color: var(--ok-ink); border: 1px solid var(--ok-line); }
-.msg.err { padding: 8px 12px; background: var(--err-bg); color: var(--err-ink); border: 1px solid var(--err-line); }
+.msg.ok { padding: 8px 12px; background: var(--ok-bg); color: var(--ok); border: 1px solid var(--border); }
+.msg.err { padding: 8px 12px; background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger); }
 .msg.ok:empty, .msg.err:empty { display: none; }
 .msg p { margin: 0; }
 .msg ul { margin: 4px 0 0; padding-left: 20px; }
@@ -80,8 +63,8 @@ h2 { margin: 0 0 8px; font-size: 1.05rem; }
 fieldset.lock { border: 0; margin: 0; padding: 0; min-width: 0; }
 
 .card, .preview {
-  background: var(--card);
-  border: 1px solid #c9ccd0;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 12px;
   margin-bottom: 12px;
@@ -98,9 +81,9 @@ input, select {
   min-height: 40px;
   padding: 6px 8px;
   font: inherit;
-  color: var(--ink);
-  background: #ffffff;
-  border: 1px solid var(--line);
+  color: var(--fg);
+  background: var(--bg-raised);
+  border: 1px solid var(--input-border);
   border-radius: 6px;
 }
 
@@ -111,14 +94,13 @@ input, select {
   font: inherit;
   font-weight: 600;
   border-radius: 6px;
-  border: 2px solid var(--accent);
+  border: 2px solid transparent;
   cursor: pointer;
 }
-.btn.primary { background: var(--accent); color: #ffffff; }
-.btn.secondary { background: #ffffff; color: var(--accent); }
-.app-header .btn.secondary { border-color: #ffffff; }
+.btn.primary { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }
+.btn.secondary { background: var(--btn-secondary); color: var(--fg); border-color: var(--control-border); }
 .btn:hover { filter: brightness(0.94); }
-.btn:disabled { background: #e5e8eb; color: #545f69; border-color: #9aa3ab; cursor: not-allowed; filter: none; }
+.btn:disabled { background: var(--bg-sunken); color: var(--faint); border-color: var(--border); cursor: not-allowed; filter: none; }
 .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
 
 .move { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
@@ -134,16 +116,16 @@ input, select {
   padding: 6px 10px;
   text-align: left;
   font: inherit;
-  color: var(--ink);
-  background: #ffffff;
-  border: 1px solid var(--line);
+  color: var(--fg);
+  background: var(--bg-raised);
+  border: 1px solid var(--input-border);
   border-radius: 6px;
   cursor: pointer;
 }
-.list button:hover { background: #f1f5f6; }
+.list button:hover { background: var(--state-hover); }
 .list button[aria-current="true"] {
-  background: var(--accent-soft);
-  border: 2px solid var(--accent);
+  background: var(--state-selected);
+  border: 2px solid var(--fg);
   font-weight: 700;
 }
 
@@ -155,8 +137,8 @@ input, select {
   width: 100%;
   height: auto;
   aspect-ratio: 4 / 3;
-  background: #fbfaf7;
-  border: 1px solid var(--line);
+  background: var(--bg-sunken);
+  border: 1px solid var(--border);
   border-radius: 6px;
   touch-action: manipulation;
 }
@@ -165,7 +147,6 @@ input, select {
   outline: 3px solid var(--focus);
   outline-offset: 2px;
 }
-.app-header .btn:focus-visible { outline-color: #ffffff; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
