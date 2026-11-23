@@ -21,6 +21,7 @@ DEFAULT_STATIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "s
 STATIC_ROUTES = {
     "/": ("index.html", "text/html; charset=utf-8"),
     "/static/app.js": ("app.js", "text/javascript; charset=utf-8"),
+    "/static/tokens.css": ("tokens.css", "text/css; charset=utf-8"),
     "/static/styles.css": ("styles.css", "text/css; charset=utf-8"),
 }
 
