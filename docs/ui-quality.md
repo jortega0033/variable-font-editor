@@ -13,6 +13,8 @@ These ten rules are binding for every change to `font_editor/static/` and to use
 9. Dense, aligned layouts on a consistent spacing scale. No card grid where a table or a list is the right form.
 10. User-facing copy is plain and specific: no filler, no exclamation marks, and the same word for the same thing everywhere.
 
+Colours come from the shared tokens in [design-tokens.md](design-tokens.md); new UI adds no colour literals.
+
 ## How they are applied
 
 - A UI ticket starts with the `ui-ux-pro-max` skill (design-system search for the product type: `python .claude/skills/ui-ux-pro-max/scripts/search.py "<query>" --design-system`) and ends with a check of the changed screens against this file, rule by rule, recorded in the pull request.

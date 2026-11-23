@@ -106,7 +106,7 @@ How a ticket gets from the queue to a ready pull request. Each piece has its own
 - **Permissions:** [`.claude/settings.json`](.claude/settings.json). Documented commands are allowed; force pushes, pushes to `main`, `gh pr merge` and releases are denied; edits to CI, agent configuration and Loop files ask first; the agent-configuration rules also cover the copies in ticket worktrees. A ticket never changes agent configuration; the `ask` rules do not cover edits made through a shell command.
 - **CI:** [`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs the test command and the gate self-test on Linux and Windows. It runs on the draft pull request and must be green before the pull request is marked ready; a failure means fix, re-run local checks and both gates, push.
 - **Pull request:** [`.github/pull_request_template.md`](.github/pull_request_template.md). Add one line under `Unreleased` in [`CHANGELOG.md`](CHANGELOG.md) for every ticket.
-- **UI and copy:** [`docs/ui-quality.md`](docs/ui-quality.md) holds the ten UI rules; the `ui-ux-pro-max` and `unslop` skills are used as it describes.
+- **UI and copy:** [`docs/ui-quality.md`](docs/ui-quality.md) holds the ten UI rules; the `ui-ux-pro-max` and `unslop` skills are used as it describes. Colours come only from the Pipenzo tokens in [`docs/design-tokens.md`](docs/design-tokens.md); no new colour literals.
 - **Decisions:** [`docs/owner-decisions.md`](docs/owner-decisions.md) records what the owner decided and where it is implemented.
 - **Merge and release:** only the owner merges and releases ([`docs/RELEASING.md`](docs/RELEASING.md)). Security reports: [`SECURITY.md`](SECURITY.md).
 
