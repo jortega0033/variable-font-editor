@@ -185,7 +185,7 @@ class StaticTests(ServerTestCase):
         import os
         from font_editor.server import DEFAULT_STATIC_DIR, create_server
         import tempfile, threading, http.client
-        names = ["index.html", "app.js", "styles.css"]
+        names = ["index.html", "app.js", "tokens.css", "styles.css"]
         if not all(os.path.isfile(os.path.join(DEFAULT_STATIC_DIR, n)) for n in names):
             self.skipTest("static files not present yet")
         with tempfile.TemporaryDirectory() as d:
@@ -193,7 +193,7 @@ class StaticTests(ServerTestCase):
             t = threading.Thread(target=srv.serve_forever, daemon=True)
             t.start()
             try:
-                for path, prefix in [("/", "text/html"), ("/static/app.js", "text/javascript"), ("/static/styles.css", "text/css")]:
+                for path, prefix in [("/", "text/html"), ("/static/app.js", "text/javascript"), ("/static/tokens.css", "text/css"), ("/static/styles.css", "text/css")]:
                     c = http.client.HTTPConnection("127.0.0.1", srv.port, timeout=10)
                     c.request("GET", path)
                     r = c.getresponse()

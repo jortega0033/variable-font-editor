@@ -298,8 +298,12 @@
   function sx(v, x) { return v.ox + (x - v.xmin) * v.s; }
   function sy(v, y) { return v.h - (v.oy + (y - v.ymin) * v.s); }
 
+  function tok(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+
   function drawLabel(ctx, text, x, y) {
-    ctx.fillStyle = '#3a4550';
+    ctx.fillStyle = tok('--muted');
     ctx.font = '12px system-ui, sans-serif';
     ctx.fillText(text, x, y);
   }
@@ -345,21 +349,21 @@
 
     ctx.lineWidth = 1;
     // cap-height guide
-    ctx.strokeStyle = '#1d4ed8';
+    ctx.strokeStyle = tok('--faint');
     ctx.setLineDash([6, 4]);
     ctx.beginPath(); ctx.moveTo(left, sy(v, cap)); ctx.lineTo(right, sy(v, cap)); ctx.stroke();
     drawLabel(ctx, 'cap height', left + 4, sy(v, cap) - 4);
     // origin x=0
-    ctx.strokeStyle = '#6b7280';
+    ctx.strokeStyle = tok('--control-border');
     ctx.setLineDash([]);
     ctx.beginPath(); ctx.moveTo(sx(v, 0), 0); ctx.lineTo(sx(v, 0), h); ctx.stroke();
     // advance mark
-    ctx.strokeStyle = '#9a3412';
+    ctx.strokeStyle = tok('--muted');
     ctx.setLineDash([6, 4]);
     ctx.beginPath(); ctx.moveTo(sx(v, adv), 0); ctx.lineTo(sx(v, adv), h); ctx.stroke();
     drawLabel(ctx, 'advance', Math.max(2, sx(v, adv) - 48), 14);
     // baseline
-    ctx.strokeStyle = '#1b1f23';
+    ctx.strokeStyle = tok('--fg');
     ctx.setLineDash([]);
     ctx.lineWidth = 1.5;
     ctx.beginPath(); ctx.moveTo(left, sy(v, 0)); ctx.lineTo(right, sy(v, 0)); ctx.stroke();
@@ -377,9 +381,9 @@
       if (i === 0) { ctx.moveTo(X, Y); } else { ctx.lineTo(X, Y); }
     });
     ctx.closePath();
-    ctx.fillStyle = 'rgba(15, 76, 92, 0.16)';
+    ctx.fillStyle = tok('--state-selected');
     ctx.fill();
-    ctx.strokeStyle = '#0f4c5c';
+    ctx.strokeStyle = tok('--fg');
     ctx.lineWidth = 2;
     ctx.stroke();
 
@@ -388,15 +392,15 @@
       var on = i === state.selPoint;
       ctx.beginPath();
       ctx.arc(X, Y, on ? 8 : 5, 0, Math.PI * 2);
-      ctx.fillStyle = on ? '#b42318' : '#ffffff';
+      ctx.fillStyle = on ? tok('--primary') : tok('--bg-raised');
       ctx.fill();
       ctx.lineWidth = 2;
-      ctx.strokeStyle = on ? '#ffffff' : '#0f4c5c';
+      ctx.strokeStyle = on ? tok('--bg') : tok('--fg');
       ctx.stroke();
       if (on) {
         ctx.beginPath();
         ctx.arc(X, Y, 8, 0, Math.PI * 2);
-        ctx.strokeStyle = '#7a0b0b';
+        ctx.strokeStyle = tok('--fg');
         ctx.lineWidth = 1;
         ctx.stroke();
         drawLabel(ctx, sel, X + 11, Y - 9);
@@ -779,6 +783,10 @@
     new ResizeObserver(function () { renderPreview(); }).observe(el.canvas);
   } else {
     window.addEventListener('resize', renderPreview);
+  }
+  if (typeof window.matchMedia === 'function') {
+    var scheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (typeof scheme.addEventListener === 'function') { scheme.addEventListener('change', renderPreview); }
   }
   window.addEventListener('beforeunload', function (e) {
     if (state.dirty) { e.preventDefault(); e.returnValue = ''; }
